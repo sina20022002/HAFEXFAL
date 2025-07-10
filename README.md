@@ -1,1 +1,114 @@
 # HAFEXFAL
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <title>فال حافظ با هوش مصنوعی</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      direction: rtl;
+      margin: 0;
+      background: linear-gradient(135deg, #fbd3e9, #fff1f1);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header {
+      color: #c2185b;
+      font-size: 48px;
+      font-weight: bold;
+      margin-top: 40px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+    .form-container {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      margin-top: 40px;
+      text-align: center;
+      width: 80%;
+      max-width: 500px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 80%;
+      max-width: 300px;
+    }
+    button {
+      background-color: #ec407a;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #d81b60;
+    }
+    #result, #counter {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #333;
+      font-size: 20px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 15px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">روز خود را با فال حافظ و یک فنجان قهوه شروع کنید</div>
+  
+  <div class="form-container">
+    <h1>پیش بینی و گرفتن فال توسط هوش مصنوعی</h1>
+    <input type="text" id="customerName" placeholder="نام خود را وارد کنید" /><br/>
+    <button onclick="showFal()">ارسال</button><br/>
+    
+
+    <div id="result"></div>
+    <div id="counter"></div>
+  </div>
+
+  <script>
+    let falList = [
+      "به یاد یار و دیار آمدم به بوستان",
+      "دوش وقت سحر از غصه نجاتم دادند",
+      "سال‌ها دل طلب جام جم از ما می‌کرد",
+      "toon",
+      "پووچ"
+    ];
+
+    let clickCount = 0;
+
+    function showFal() {
+      const name = document.getElementById("customerName").value.trim();
+      if (name === "") {
+        document.getElementById("result").textContent = "لطفا نام خود را وارد کنید.";
+        return;
+      }
+
+      const randomIndex = Math.floor(Math.random() * falList.length);
+      const randomFal = falList[randomIndex];
+      document.getElementById("result").textContent = `${name} عزیز، فال شما: ${randomFal}`;
+
+      clickCount++;
+      document.getElementById("counter").textContent = `کلیک: ${clickCount}`;
+    }
+
+    function addFal() {
+      const newFal = document.getElementById("newFal").value.trim();
+      if (newFal !== "") {
+        falList.push(newFal);
+        alert("فال جدید اضافه شد!");
+        document.getElementById("newFal").value = "";
+      }
+    }
+  </script>
+</body>
+</html>
