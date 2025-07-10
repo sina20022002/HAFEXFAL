@@ -1,131 +1,178 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8" />  
-  <title>فال حافظ با هوش مصنوعی</title>
+  <meta charset="UTF-8" />
+  <title>فال حافظ با قهوه</title>
   <style>
     body {
       font-family: sans-serif;
       direction: rtl;
       margin: 0;
-      background: linear-gradient(135deg, #fbd3e9, #fff1f1);
+      background-color: #6f4e37; /* قهوه‌ای */
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: flex-start;
+      padding: 30px;
+      color: #fff;
+    }
+    .logo {
+      width: 100px;
+      height: auto;
+      margin-top: 20px;
     }
     .header {
-      color: #c2185b;
-      font-size: 48px;
+      color: #fff;
+      font-size: 40px;
       font-weight: bold;
-      margin-top: 40px;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+      margin-top: 20px;
       text-align: center;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
     }
     .form-container {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.2);
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-      margin-top: 40px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+      margin-top: 30px;
       text-align: center;
-      width: 80%;
+      width: 90%;
       max-width: 500px;
     }
     input, button {
       padding: 10px;
-      font-size: 16px;
-      margin: 5px;
+      font-size: 18px;
+      margin: 10px;
       border-radius: 5px;
-      border: 1px solid #ccc;
+      border: none;
       width: 80%;
-      max-width: 300px;
+    }
+    input {
+      background: #fff;
+      color: #333;
     }
     button {
-      background-color: #ec407a;
-      color: white;
+      background-color: #8b4513;
+      color: #fff;
       cursor: pointer;
       transition: background-color 0.3s;
     }
     button:hover {
-      background-color: #d81b60;
+      background-color: #5c3317;
     }
-    #result, #counter {
+    #result {
       margin-top: 20px;
       font-weight: bold;
-      color: #333;
+      color: #ffebcd;
       font-size: 20px;
-      background: rgba(255, 255, 255, 0.7);
-      padding: 15px;
-      border-radius: 10px;
+      white-space: pre-line;
+    }
+    #counter {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #ffebcd;
     }
   </style>
 </head>
 <body>
-  <div class="header">روز خود را با فال حافظ و یک فنجان قهوه شروع کنید</div>
-  
-  <div class="form-container">
-    <h1>پیش بینی و گرفتن فال توسط هوش مصنوعی</h1>
-    <input type="text" id="customerName" placeholder="نام خود را وارد کنید" /><br/>
-    <button onclick="showFal()">ارسال</button><br/>
-    
+  <!-- لوگوی دانه قهوه -->
+  <img class="logo" src="data:image/jpeg;base64,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" alt="Coffee Bean Logo" />
 
+  <div class="header">روزت را با فال حافظ و عطر قهوه آغاز کن</div>
+
+  <div class="form-container">
+    <h2>نامت را وارد کن و فال بگیر!</h2>
+    <input type="text" id="customerName" placeholder="نام شما" />
+    <button onclick="showFal()">بگیر فال!</button>
     <div id="result"></div>
     <div id="counter"></div>
   </div>
 
   <script>
-    let falList = [
-      "به یاد یار و دیار آمدم به بوستان",
-      "دوش وقت سحر از غصه نجاتم دادند",
-      "سال‌ها دل طلب جام جم از ما می‌کرد",
-      "خیلی زیبا هستی",
-      "پووچ",
-      "الا یا ایها الساقی ادر کاسا و ناولها
-که عشق آسان نمود اول ولی افتاد مشکل‌ها",
-  "دوش دیدم که ملائک در میخانه زدند
-گل آدم بسرشتند و به پیمانه زدند",
-  "ساقیا آمدن عید مبارک بادت
-وان مواعید که کردی مرواد از یادت",
-  "زلفت هزار دل به یکی تار مو ببست
-راه هزار چاره گر از چار سو ببست",
-  "اگر آن ترک شیرازی به دست آرد دل ما را
-به خال هندویش بخشم سمرقند و بخارا را",
-  "ای که از کوچه معشوقه ما می‌گذری
-برحذر باش که سر می‌شکند دیوارش"
- " دوش وقت سحر از غصه نجاتم دادند
-و اندر آن ظلمت شب آب حیاتم دادند"
-
-
-
-
+    // آرایه غزل‌های حافظ
+    const falList = [
+      "الا یا ایها الساقی ادر کاسا و ناولها\nکه عشق آسان نمود اول ولی افتاد مشکل‌ها",
+      "دوش دیدم که ملائک در میخانه زدند\nگل آدم بسرشتند و به پیمانه زدند",
+      "ساقیا آمدن عید مبارک بادت\nوان مواعید که کردی مرواد از یادت",
+      "زلفت هزار دل به یکی تار مو ببست\nراه هزار چاره گر از چار سو ببست",
+      "اگر آن ترک شیرازی به دست آرد دل ما را\nبه خال هندویش بخشم سمرقند و بخارا را",
+      "ای که از کوچه معشوقه ما می‌گذری\nبرحذر باش که سر می‌شکند دیوارش",
+      "دوش وقت سحر از غصه نجاتم دادند\nو اندر آن ظلمت شب آب حیاتم دادند",
+      "سال‌ها دل طلب جام جم از ما می‌کرد\nو آنچه خود داشت ز بیگانه تمنا می‌کرد",
+      "حسنت به اتفاق ملاحت جهان گرفت\nآری به اتفاق جهان می‌توان گرفت",
+      "هر کسی را هوس وصل تو در سر باشد\nعاقبت محرم اسرار تو آخر باشد",
+      "عاشقم بر قهر و بر لطفش به جد\nای عجب من عاشق این هر دو ضد",
+      "مژده ای دل که دگر باد صبا باز آمد\nهدهد خوش خبر از طرف سبا باز آمد",
+      "بر سر آنم که گر ز دست برآید\nدست به کاری زنم که غصه سر آید",
+      "دلم رمیده شد و غافلم من از دل خویش\nچرا که آن بت عیار رفت و با دل شد",
+      "نسیم صبح سعادت بدان نشان که تو دانی\nگذشت بر سر من زان در آستان که تو دانی",
+      "به یاد یار و دیار آمدم به بوستان\nچه جای گل، که نگارم درآمد از بستان",
+      "دل می‌رود ز دستم صاحب دلان خدا را\nدردا که راز پنهان خواهد شد آشکارا",
+      "خوشا وقت سعادت که دیدار رویت\nبود سایه‌بان سرم از آفتاب",
+      "صوفی بیا که آینه صافیست جام را\nتا بنگری صفای می لعل‌فام را",
+      "گفتم غم تو دارم گفتا غمت سر آید\nگفتم که ماه من شو گفتا اگر برآید",
+      "پوچ",
+      "زباروی عالم",
+      "پولدار میشی",
+      "یه زنگ بزن به پدرت و بگو دوسش داری",
+      "لاک سیاه بیشتر بهت میاد",
+      "همین زودیا یه خاستگار میاد برات ",
+      "در آینده مشهور میشی",
+      "امشب تو برای خونه آشپزی کن",
+      "جذاب",
+      "کفشات خیلی خوشکله",
+      "خوشتیپ",
+      "عطرت خوشبو هست",
+      "امروز یه کتاب شروع کن",
+      "عمری دراز"
     ];
 
     let clickCount = 0;
 
     function showFal() {
       const name = document.getElementById("customerName").value.trim();
+
       if (name === "") {
-        document.getElementById("result").textContent = "لطفا نام خود را وارد کنید.";
+        document.getElementById("result").textContent = "لطفا نام خود را وارد کن!";
         return;
       }
 
       const randomIndex = Math.floor(Math.random() * falList.length);
       const randomFal = falList[randomIndex];
-      document.getElementById("result").textContent = `${name} عزیز، فال شما: ${randomFal}`;
 
+      document.getElementById("result").textContent =
+        name + " عزیز!\n\nفال شما:\n" + randomFal;
+
+      // شمارنده استفاده
       clickCount++;
-      document.getElementById("counter").textContent = `کلیک: ${clickCount}`;
-    }
-
-    function addFal() {
-      const newFal = document.getElementById("newFal").value.trim();
-      if (newFal !== "") {
-        falList.push(newFal);
-        alert("فال جدید اضافه شد!");
-        document.getElementById("newFal").value = "";
-      }
+      document.getElementById("counter").textContent =
+        "این صفحه تاکنون " + clickCount + " بار استفاده شده است.";
     }
   </script>
 </body>
-</html>   
+</html>
+<p id="support-text" style="margin-top: 15px; font-size: 16px; color: #ffebcd;">
+  اگر از این سایت خوشت امد در واتساپ یه قلب برا من بفرست و از من حمایت کن  
+  <a href="https://your-payment-gateway.com" target="_blank" style="color: #ffd700; text-decoration: underline;">
+    
+  </a>
+  مدیریت محمد فاخر
+</p>
+<a href="https://wa.me/989045848053text=سلام!%20برای%20فال%20حافظ%20پیام%20می‌دهم" 
+   target="_blank" 
+   style="
+      display: inline-block;
+      background-color: #d8e4f7;
+      color: red;
+      padding: 10px 20px;
+      margin-top: 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+   ">
+قلب بفرست دیگه
+</a>
+
